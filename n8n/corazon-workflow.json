@@ -1,0 +1,1842 @@
+{
+  "name": "Corazon - Clasificacion Leads VIP",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Nuevo Lead - Formulario Web",
+        "formDescription": "Completa tus datos y te contactaremos pronto",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre completo"
+            },
+            {
+              "fieldLabel": "Empresa"
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Telefono"
+            },
+            {
+              "fieldLabel": "Mensaje / Necesidad",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c06f6c37-9028-4c8e-a060-54855758ad3a",
+      "name": "On form submission",
+      "webhookId": "bce61c16-ee4d-4b09-99a1-fcd3e9aacb0d"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4f62643c-d221-4b0a-b26e-d572d1bd082d",
+              "leftValue": "={{ $json['Nombre completo'] && $json['Email'] ? 'completo' : 'incompleto'}}",
+              "rightValue": "completo",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7fded779-4124-4d5c-96b0-8dd45cca06c9",
+      "name": "Validar Datos Completos"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appEYflVUSmKkVota",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tbl8BYa0WF1hRFflp"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Score_IA": 0
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Lead",
+              "displayName": "Nombre_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado_por_IA",
+                  "value": "Procesado_por_IA"
+                },
+                {
+                  "name": "Esperando_Aprobacion",
+                  "value": "Esperando_Aprobacion"
+                },
+                {
+                  "name": "Aprobado_por_Humano",
+                  "value": "Aprobado_por_Humano"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Contactado",
+                  "value": "Contactado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Nuevo",
+                  "value": "Nuevo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Formulario Web",
+                  "value": "Formulario Web"
+                },
+                {
+                  "name": "Referido",
+                  "value": "Referido"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Clasificacion_IA",
+              "displayName": "Clasificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "VIP",
+                  "value": "VIP"
+                },
+                {
+                  "name": "Estándar",
+                  "value": "Estándar"
+                },
+                {
+                  "name": "Descartar",
+                  "value": "Descartar"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Justificacion_IA",
+              "displayName": "Justificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Aprobacion",
+              "displayName": "Fecha_Aprobacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Enviado",
+              "displayName": "Mensaje_Enviado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Ingreso",
+              "displayName": "Fecha_Ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Ejecuciones_IA",
+              "displayName": "Ejecuciones_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores",
+              "displayName": "Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        64
+      ],
+      "id": "50a7ddcc-04b1-4dc7-b5dc-9c5448dc73de",
+      "name": "Create or update a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "lOj0A6VIwtEENcJj",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f4253c9c-563d-4d5e-af8e-2e66b8e17579",
+              "leftValue": "={{  $json.fields.Clasificacion_IA }} }}",
+              "rightValue": "VIP",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1056,
+        64
+      ],
+      "id": "8c0ad0fe-e6fe-492c-85eb-56319f7c84c0",
+      "name": "Es VIP?"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "sendAndWait",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "leads-vip-aprobaciones",
+          "mode": "name"
+        },
+        "message": "🟡 Nuevo Lead VIP requiere aprobación\n\nNombre: {{ $('On form submission').item.json['Nombre completo'] }}\nEmpresa: {{ $('On form submission').item.json['Empresa'] }}\nEmail: {{ $('On form submission').item.json['Email'] }}\nMensaje: {{ $('On form submission').item.json['Mensaje / Necesidad'] }}\n\nScore IA: {{ $json.fields.Score_IA }}\nJustificación IA: {{ $json.fields.Justificacion_IA }}\n\n¿Apruebas el contacto con este lead?",
+        "captureResponder": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.7,
+      "position": [
+        1280,
+        16
+      ],
+      "id": "73a4af15-6a74-4aea-b540-aef4623cd4de",
+      "name": "Aprobacion Humana Slack",
+      "webhookId": "8de48c22-0956-4ee1-b368-d8ddb1a50b3d",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "g8naqw73lgujNslG",
+          "name": "Slack account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ebab5e5c-babe-467d-923d-b13d3ca18f2c",
+              "leftValue": "=={{  $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1504,
+        16
+      ],
+      "id": "189510f9-83bc-4a71-bfd3-73e98cb63bf5",
+      "name": "Fue Aprobado?"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appEYflVUSmKkVota",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl8BYa0WF1hRFflp",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "{{ $json.id ",
+            "Aprobado_Por": "{{ $json.user?.name || 'Slack' ",
+            "Estado": "Aprobado_por_Humano",
+            "Fecha_Aprobacion": "=$now.toISO()"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Lead",
+              "displayName": "Nombre_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado_por_IA",
+                  "value": "Procesado_por_IA"
+                },
+                {
+                  "name": "Esperando_Aprobacion",
+                  "value": "Esperando_Aprobacion"
+                },
+                {
+                  "name": "Aprobado_por_Humano",
+                  "value": "Aprobado_por_Humano"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Contactado",
+                  "value": "Contactado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Formulario Web",
+                  "value": "Formulario Web"
+                },
+                {
+                  "name": "Referido",
+                  "value": "Referido"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Clasificacion_IA",
+              "displayName": "Clasificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "VIP",
+                  "value": "VIP"
+                },
+                {
+                  "name": "Estándar",
+                  "value": "Estándar"
+                },
+                {
+                  "name": "Descartar",
+                  "value": "Descartar"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificacion_IA",
+              "displayName": "Justificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Aprobacion",
+              "displayName": "Fecha_Aprobacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Enviado",
+              "displayName": "Mensaje_Enviado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Ingreso",
+              "displayName": "Fecha_Ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Ejecuciones_IA",
+              "displayName": "Ejecuciones_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Errores",
+              "displayName": "Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1728,
+        16
+      ],
+      "id": "07ace299-0fae-4c3a-ac10-b7de9fd18759",
+      "name": "Actualizar Lead Aprobado",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "lOj0A6VIwtEENcJj",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appEYflVUSmKkVota",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl8BYa0WF1hRFflp",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "{{ $json.id ",
+            "Aprobado_Por": "{{ $json.user?.name || 'Slack' ",
+            "Estado": "Rechazado",
+            "Fecha_Aprobacion": "=$now.toISO()"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Lead",
+              "displayName": "Nombre_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado_por_IA",
+                  "value": "Procesado_por_IA"
+                },
+                {
+                  "name": "Esperando_Aprobacion",
+                  "value": "Esperando_Aprobacion"
+                },
+                {
+                  "name": "Aprobado_por_Humano",
+                  "value": "Aprobado_por_Humano"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Contactado",
+                  "value": "Contactado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Formulario Web",
+                  "value": "Formulario Web"
+                },
+                {
+                  "name": "Referido",
+                  "value": "Referido"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Clasificacion_IA",
+              "displayName": "Clasificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "VIP",
+                  "value": "VIP"
+                },
+                {
+                  "name": "Estándar",
+                  "value": "Estándar"
+                },
+                {
+                  "name": "Descartar",
+                  "value": "Descartar"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificacion_IA",
+              "displayName": "Justificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Aprobacion",
+              "displayName": "Fecha_Aprobacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Enviado",
+              "displayName": "Mensaje_Enviado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Ingreso",
+              "displayName": "Fecha_Ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Ejecuciones_IA",
+              "displayName": "Ejecuciones_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Errores",
+              "displayName": "Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1776,
+        272
+      ],
+      "id": "65d185b0-c225-4a2c-8751-13db0d4d566c",
+      "name": "Actualizar Lead Rechazado",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "lOj0A6VIwtEENcJj",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "=={{  $('On form submission').item.json['Email'] }}",
+        "subject": "Confirmación de contacto – Hemos recibido tu solicitud",
+        "message": "Hola {{ $('On form submission').item.json['Nombre completo'] }},Gracias por contactarnos. Hemos recibido tu solicitud y uno de nuestros representantes se pondrá en contacto contigo a la brevedad para conversar sobre {{ $('On form submission').item.json['Mensaje / Necesidad'] }}.Saludos,Equipo Comercial",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1952,
+        16
+      ],
+      "id": "5e49266e-962e-4b00-b039-95f124ebe4bc",
+      "name": "Email Confirmacion Aprobado",
+      "webhookId": "1e0dd00f-64cb-4a9c-a7ae-4454ffbe214a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lQivrRjRJf2ymtaP",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appEYflVUSmKkVota",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl8BYa0WF1hRFflp",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "{{ $json.id ",
+            "Estado": "Procesado_por_IA"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Lead",
+              "displayName": "Nombre_Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje_Original",
+              "displayName": "Mensaje_Original",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado_por_IA",
+                  "value": "Procesado_por_IA"
+                },
+                {
+                  "name": "Esperando_Aprobacion",
+                  "value": "Esperando_Aprobacion"
+                },
+                {
+                  "name": "Aprobado_por_Humano",
+                  "value": "Aprobado_por_Humano"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Contactado",
+                  "value": "Contactado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Formulario Web",
+                  "value": "Formulario Web"
+                },
+                {
+                  "name": "Referido",
+                  "value": "Referido"
+                },
+                {
+                  "name": "Otro",
+                  "value": "Otro"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Clasificacion_IA",
+              "displayName": "Clasificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "VIP",
+                  "value": "VIP"
+                },
+                {
+                  "name": "Estándar",
+                  "value": "Estándar"
+                },
+                {
+                  "name": "Descartar",
+                  "value": "Descartar"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Score_IA",
+              "displayName": "Score_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificacion_IA",
+              "displayName": "Justificacion_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Alta",
+                  "value": "Alta"
+                },
+                {
+                  "name": "Media",
+                  "value": "Media"
+                },
+                {
+                  "name": "Baja",
+                  "value": "Baja"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Aprobacion",
+              "displayName": "Fecha_Aprobacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Mensaje_Enviado",
+              "displayName": "Mensaje_Enviado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Ingreso",
+              "displayName": "Fecha_Ingreso",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Ejecuciones_IA",
+              "displayName": "Ejecuciones_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Errores",
+              "displayName": "Errores",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1264,
+        240
+      ],
+      "id": "f0099d1e-872c-43f0-83ff-07f4cb3b2ddc",
+      "name": "Actualizar Lead Estandar",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "lOj0A6VIwtEENcJj",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appEYflVUSmKkVota",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tblMHh5joB63vAQzK"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Resuelto": false,
+            "Reintentos": 0,
+            "Nodo_Origen": "Validar Datos Completos",
+            "Tipo_Error": "Datos_Incompletos",
+            "Mensaje_Error": "{{ 'Datos incompletos recibidos del formulario. Nombre: ' + ($json['Nombre completo'] ? 'OK' : 'FALTA') + ', Email: ' + ($json['Email'] ? 'OK' : 'FALTA') "
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Error",
+              "displayName": "ID_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Lead",
+              "displayName": "Lead",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Tipo_Error",
+              "displayName": "Tipo_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Datos_Incompletos",
+                  "value": "Datos_Incompletos"
+                },
+                {
+                  "name": "Error_API_IA",
+                  "value": "Error_API_IA"
+                },
+                {
+                  "name": "Timeout",
+                  "value": "Timeout"
+                },
+                {
+                  "name": "Error_Slack",
+                  "value": "Error_Slack"
+                },
+                {
+                  "name": "Error_Validacion",
+                  "value": "Error_Validacion"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Nodo_Origen",
+              "displayName": "Nodo_Origen",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje_Error",
+              "displayName": "Mensaje_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resuelto",
+              "displayName": "Resuelto",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Reintentos",
+              "displayName": "Reintentos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        208
+      ],
+      "id": "fceb9d75-c681-480e-a66b-2169bb395165",
+      "name": "Log Error Datos Incompletos",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "lOj0A6VIwtEENcJj",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "Eres un asistente de clasificación de leads B2B. Analiza el siguiente lead y clasifícalo.\n\nDatos del lead:\nNombre: {{ $json['Nombre completo'] }}\nEmpresa: {{ $json['Empresa'] }}\nEmail: {{ $json['Email'] }}\nTelefono: {{ $json['Telefono'] }}\nMensaje: {{ $json['Mensaje / Necesidad'] }}\n\nInstrucciones:\n1. Clasifica el lead en una de estas categorías: VIP, Estándar, Descartar.\n   - VIP: empresa grande, presupuesto claro, urgencia alta, decisor mencionado.\n   - Estándar: interés genuino pero sin señales fuertes de urgencia o presupuesto.\n   - Descartar: spam, mensaje irrelevante, o datos incoherentes.\n2. Asigna un score de 0 a 100 indicando la calidad del lead.\n3. Asigna una prioridad: Alta, Media o Baja.\n4. Escribe una justificación breve (máximo 2 frases) explicando tu decisión.\n\nResponde ÚNICAMENTE con un JSON válido, sin texto adicional, con exactamente este formato:\n{\n  \"clasificacion\": \"VIP\" | \"Estándar\" | \"Descartar\",\n  \"score\": number,\n  \"prioridad\": \"Alta\" | \"Media\" | \"Baja\",\n  \"justificacion\": \"string\"\n}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 300
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        48
+      ],
+      "id": "c677dc99-b482-4eed-b8d1-07397f68be07",
+      "name": "Clasificar Lead con IA",
+      "credentials": {
+        "openAiApi": {
+          "id": "n7JkWoKsiWaustwA",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n    let raw = '';\n    try {\n          raw = item.json.output[0].content[0].text;\n    } catch (e) {\n          raw = '';\n    }\n\n    let parsed;\n    try {\n          const cleaned = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n          parsed = JSON.parse(cleaned);\n    } catch (e) {\n          parsed = {\n                  clasificacion: 'Estándar',\n                  score: 0,\n                  prioridad: 'Baja',\n                  justificacion: 'Error al parsear respuesta de IA: ' + e.message\n          };\n    }\n\n    const formData = $('On form submission').first().json;\n\n    results.push({\n          json: {\n                  Nombre_Lead: formData['Nombre completo'],\n                  Empresa: formData['Empresa'],\n                  Email: formData['Email'],\n                  Telefono: formData['Telefono'],\n                  Mensaje_Original: formData['Mensaje / Necesidad'],\n                  Clasificacion_IA: parsed.clasificacion,\n                  Score_IA: parsed.score,\n                  Prioridad: parsed.prioridad,\n                  Justificacion_IA: parsed.justificacion,\n                  Estado: 'Nuevo'\n          }\n    });\n}\n\nreturn results"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        -128
+      ],
+      "id": "82c1c67d-a72a-4a21-b9c6-6ad1f48ffb45",
+      "name": "Parsear Respuesta IA"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Nombre completo": "Laura Martinez",
+          "Empresa": "Vantia Corp",
+          "Email": "laura.martinez@vantiacorp.com",
+          "Telefono": "+54 9 11 5555-1234",
+          "Mensaje / Necesidad": "Necesitamos automatizar la clasificacion de 500 leads mensuales, tenemos presupuesto aprobado y buscamos implementar en las proximas 2 semanas. Soy la Directora de Operaciones."
+        }
+      }
+    ],
+    "Aprobacion Humana Slack": [
+      {
+        "json": {
+          "id": "recnVKqilxQkAm630",
+          "createdTime": "2026-09-02T15:05:36.000Z",
+          "fields": {
+            "Fecha_Ingreso": "2026-09-02T15:05:36.000Z",
+            "Prioridad": "Media",
+            "Estado": "Nuevo",
+            "Nombre_Lead": "Laura Martinez",
+            "Justificacion_IA": "El lead muestra interes genuino.",
+            "Telefono": "+54 9 11 5555-1234",
+            "Empresa": "Vantia Corp",
+            "Email": "laura.martinez@vantiacorp.com",
+            "Clasificacion_IA": "Estandar",
+            "Score_IA": 65,
+            "Mensaje_Original": "Necesitamos automatizar la clasificacion de leads."
+          },
+          "data": {
+            "approved": true
+          },
+          "user": {
+            "id": "U123456",
+            "name": "Manuel Sanchez"
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Validar Datos Completos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Datos Completos": {
+      "main": [
+        [
+          {
+            "node": "Clasificar Lead con IA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Error Datos Incompletos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a record": {
+      "main": [
+        [
+          {
+            "node": "Es VIP?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Es VIP?": {
+      "main": [
+        [
+          {
+            "node": "Aprobacion Humana Slack",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Actualizar Lead Estandar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aprobacion Humana Slack": {
+      "main": [
+        [
+          {
+            "node": "Fue Aprobado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fue Aprobado?": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Lead Aprobado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Actualizar Lead Rechazado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Lead Aprobado": {
+      "main": [
+        [
+          {
+            "node": "Email Confirmacion Aprobado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificar Lead con IA": {
+      "main": [
+        [
+          {
+            "node": "Parsear Respuesta IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Respuesta IA": {
+      "main": [
+        [
+          {
+            "node": "Create or update a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "033ba42e-eb65-4f81-a12a-c6edfcb4c7ea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8adf35290fc2415293a98d2e91b0941b5499984326e196072a96e509092df342"
+  },
+  "nodeGroups": [],
+  "id": "rpBG3LpQbaZyAJPF",
+  "tags": []
+}
